@@ -21,8 +21,8 @@ public class Runner implements Comparable<Runner> {
     public void setNumber(int number) {
         this.number = number;
     }
-    public void setFinishTime(int hours, int minutes, int seconds) {
-        this.finishTime = hours*3600 + minutes*60 + seconds;
+    public void setFinishTime(int finishTime) {
+        this.finishTime = finishTime;
     }
 
     //methods

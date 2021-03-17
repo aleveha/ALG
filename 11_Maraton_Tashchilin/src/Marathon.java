@@ -17,12 +17,7 @@ public class Marathon {
     }
 
     private static String timeToString(int[] time) {
-        return String.format(
-                "%s:%s:%s",
-                time[0] > 9 ? time[0] : "0" + time[0],
-                time[1] > 9 ? time[1] : "0" + time[1],
-                time[2] > 9 ? time[2] : "0" + time[2]
-        );
+        return String.format("%02d:%02d:%02d", time[0], time[1], time[2]);
     }
 
     public static int[] avgTime(double distance, int time) {
@@ -30,7 +25,25 @@ public class Marathon {
     }
 
     public static double avgSpeed(double distance, int time) {
-        return (distance / time) * 3600;
+        return (distance / time) * HOUR;
+    }
+
+    public static Runner getTheFastestRunner(Runner[] marathon) {
+        Runner theFastestRunner = marathon[0];
+        for (Runner r: marathon) {
+            if (r.getFinishTime() < theFastestRunner.getFinishTime()) theFastestRunner = r;
+        }
+        return theFastestRunner;
+    }
+
+    public static int upToRunners(Runner[] marathon, int[] startTime) {
+        int upToCounter = 0;
+        int[] checkingTime = new int[]{2, 7, 0};
+        for (Runner runner : marathon) {
+            if (runner.timeDifference(timeToSec(startTime)) < timeToSec(checkingTime)) upToCounter++;
+            else break;
+        }
+        return upToCounter;
     }
 
     public static void main(String[] args) {
@@ -45,6 +58,9 @@ public class Marathon {
                 new Runner(13, timeToSec(new int[]{11, 23, 16}))
         };
 
+        // finding the fastest runner
+        System.out.println("theFastestRunner je " + getTheFastestRunner(marathon).getNumber());
+
         // finding three fastest runners by sorting
         Arrays.sort(marathon);
         System.out.printf(
@@ -55,22 +71,24 @@ public class Marathon {
         );
 
         // finding how many runners is up to specified time
-        int upToCounter = 0;
-        int[] checkingTime = new int[]{2, 7, 0};
-        for (Runner runner : marathon) {
-            if (runner.timeDifference(timeToSec(startTime)) < timeToSec(checkingTime)) upToCounter++;
-            else break;
-        }
-        System.out.printf("%d běžci běželi pod 2:07\n", upToCounter);
+        System.out.printf("%d běžci běželi pod 2:07\n", upToRunners(marathon, startTime));
 
         // finding how much time lost the last runner from the first
-        int[] losingTime = secToTime(marathon[marathon.length - 1].timeDifference(marathon[0].getFinishTime()));
-        System.out.printf("Poslední bězec měl ztrátu na prvního %s\n", timeToString(losingTime));
+        System.out.printf(
+                "Poslední bězec měl ztrátu na prvního %s\n",
+                timeToString(secToTime(marathon[marathon.length - 1].timeDifference(marathon[0].getFinishTime())))
+        );
 
         // finding the fastest runner's average time on 1km
-        System.out.printf("Průměrný čas nejrychlejšího bězce na 1 km byl %s\n", timeToString(avgTime(distance, marathon[0].timeDifference(timeToSec(startTime)))));
+        System.out.printf(
+                "Průměrný čas nejrychlejšího bězce na 1 km byl %s\n",
+                timeToString(avgTime(distance, marathon[0].timeDifference(timeToSec(startTime))))
+        );
 
         // finding the fastest runner's average speed
-        System.out.printf("Průměrná rychlost nejrychlejšího bězce byla %.2f km/h\n", avgSpeed(distance, marathon[0].timeDifference(timeToSec(startTime))));
+        System.out.printf(
+                "Průměrná rychlost nejrychlejšího bězce byla %.2f km/h\n",
+                avgSpeed(distance, marathon[0].timeDifference(timeToSec(startTime)))
+        );
     }
 }
