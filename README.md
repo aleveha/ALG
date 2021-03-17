@@ -1,2 +1,2 @@
 # ALG
-Code from lessons on university
+**Code from lessons in university**
