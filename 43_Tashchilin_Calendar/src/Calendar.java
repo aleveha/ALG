@@ -4,7 +4,7 @@ public class Calendar {
     // data
     private int day, month, year;
     private final LocalDate currentDate;
-    private static final int[] daysInMonths = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private final int[] daysInMonths = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // constructors
     public Calendar(int day, int month, int year) {
@@ -69,7 +69,7 @@ public class Calendar {
         };
     }
 
-    // next
+    // next period
     public Calendar nextDay() {
         if (day == daysInMonths[month]) {
             this.day = 1;
@@ -79,6 +79,7 @@ public class Calendar {
         }
         return new Calendar(day, month, year);
     }
+
     public Calendar nextDay(int days) {
         Calendar cal = new Calendar(day, month, year);
         for (int i = 0; i < days; i++) {
@@ -96,6 +97,7 @@ public class Calendar {
         }
         return new Calendar(day, month, year);
     }
+
     public Calendar nextMonth(int months) {
         Calendar cal = new Calendar(day, month, year);
         for (int i = 0; i < months; i++) {
@@ -108,6 +110,7 @@ public class Calendar {
         this.year++;
         return new Calendar(day, month, year);
     }
+
     public Calendar nextYear(int years) {
         Calendar cal = new Calendar(day, month, year);
         for (int i = 0; i < years; i++) {
@@ -116,7 +119,7 @@ public class Calendar {
         return cal;
     }
 
-    // back
+    // previous period
     public Calendar previousDay() {
         if (day == 1) {
             this.day = month != 1 ? daysInMonths[month - 1] : daysInMonths[12];
@@ -126,6 +129,7 @@ public class Calendar {
         }
         return new Calendar(day, month, year);
     }
+
     public Calendar previousDay(int days) {
         Calendar cal = new Calendar(day, month, year);
         for (int i = 0; i < days; i++) {
@@ -143,6 +147,7 @@ public class Calendar {
         }
         return new Calendar(day, month, year);
     }
+
     public Calendar previousMonth(int months) {
         Calendar cal = new Calendar(day, month, year);
         for (int i = 0; i < months; i++) {
@@ -155,6 +160,7 @@ public class Calendar {
         this.year--;
         return new Calendar(day, month, year);
     }
+
     public Calendar previousYear(int years) {
         Calendar cal = new Calendar(day, month, year);
         for (int i = 0; i < years; i++) {
@@ -179,12 +185,14 @@ public class Calendar {
                 weekCounter++;
             }
 
-            if (i < monthStart && monthStart != 1) s.append("   ");
-            else if (exactDay())
+            if (i < monthStart && monthStart != 1)
+                s.append("   ");
+            else if (exactDay(day))
                 s.append(String.format("%s%s", Colors.BG_RED + Colors.BLACK + (String.format("%2d", day)), Colors.RESET_COLOR + " "));
             else if (day == this.day)
                 s.append(Colors.BRIGHT_GREEN).append(String.format("%2d ", day)).append(Colors.RESET_COLOR);
-            else s.append(String.format("%2d ", day));
+            else
+                s.append(String.format("%2d ", day));
         }
         return s.toString();
     }
@@ -195,7 +203,7 @@ public class Calendar {
     }
 
     // private methods
-    private boolean exactDay() {
+    private boolean exactDay(int day) {
         return day == currentDate.getDayOfMonth() && month == currentDate.getMonth().getValue() && year == currentDate.getYear();
     }
 
