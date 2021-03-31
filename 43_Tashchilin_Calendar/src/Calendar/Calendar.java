@@ -2,198 +2,93 @@ package Calendar;
 
 import Helpers.Colors;
 import java.time.LocalDate;
+import Date.Date;
 
 public class Calendar {
     // data
-    private int day, month, year;
+    private final Date date;
     private final LocalDate currentDate = LocalDate.now();
-    private final int[] daysInMonths = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // constructors
     public Calendar(int day, int month, int year) {
-        this.day = day;
-        this.month = month;
-        setYear(year);
+        date = new Date(day, month, year);
+    }
+    public Calendar(Date date) {
+        this.date = date;
     }
 
     // getters
     public int getDay() {
-        return day;
+        return date.getDay();
     }
     public int getMonth() {
-        return month;
+        return date.getMonth();
     }
     public int getYear() {
-        return year;
+        return date.getYear();
     }
 
-    // setters
-    private void setYear(int year) {
-        this.year = year;
-        daysInMonths[2] = leapYear(year) ? 29 : 28;
-    }
-
-    // static methods
+    //methods
     public static String getWeekDayToString(int day, int month, int year) {
-        return switch (getWeekDay(day, month, year)) {
-            case 1 -> "Monday";
-            case 2 -> "Tuesday";
-            case 3 -> "Wednesday";
-            case 4 -> "Thursday";
-            case 5 -> "Friday";
-            case 6 -> "Saturday";
-            default -> "Sunday";
-        };
+        return Date.getWeekDayToString(day, month, year);
     }
-
-    public static int getWeekDay(int day, int month, int year) {
-        if (month < 3) {
-            month += 12;
-            year -= 1;
-        }
-        int k = year % 100;
-        int j = year / 100;
-
-        return ((((day + (((month + 1) * 26) / 10) + k + (k / 4) + (j / 4) + (5 * j)) % 7) + 5) % 7) + 1;
-    }
-
-    public static boolean leapYear(int year) {
-        return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
-    }
-
-    // public methods
     public String getWeekDayToString() {
-        return getWeekDayToString(this.day, this.month, this.year);
+        return Date.getWeekDayToString(date.getDay(), date.getMonth(), date.getYear());
     }
-
+    public static int getWeekDay(int day, int month, int year) {
+        return Date.getWeekDay(day, month, year);
+    }
     public int getWeekDay() {
-        return getWeekDay(this.day, this.month, this.year);
-    }
-
-    public String getMonth(int month) {
-        return switch (month) {
-            case 1 -> "January";
-            case 2 -> "February";
-            case 3 -> "March";
-            case 4 -> "April";
-            case 5 -> "May";
-            case 6 -> "June";
-            case 7 -> "July";
-            case 8 -> "August";
-            case 9 -> "September";
-            case 10 -> "October";
-            case 11 -> "November";
-            default -> "December";
-        };
+        return Date.getWeekDay(date.getDay(), date.getMonth(), date.getYear());
     }
 
     // next period
     public Calendar nextDay() {
-        if (day == daysInMonths[month]) {
-            this.day = 1;
-            return nextMonth();
-        } else {
-            this.day++;
-        }
-        return new Calendar(day, month, year);
+        return new Calendar(date.nextDay());
     }
-
     public Calendar nextDay(int days) {
-        Calendar cal = new Calendar(day, month, year);
-        for (int i = 0; i < days; i++) {
-            cal = nextDay();
-        }
-        return cal;
+        return new Calendar(date.nextDay(days));
     }
-
     public Calendar nextMonth() {
-        if (month == 12) {
-            this.month = 1;
-            return nextYear();
-        } else {
-            this.month++;
-        }
-        return new Calendar(day, month, year);
+        return new Calendar(date.nextMonth());
     }
-
     public Calendar nextMonth(int months) {
-        Calendar cal = new Calendar(day, month, year);
-        for (int i = 0; i < months; i++) {
-            cal = nextMonth();
-        }
-        return cal;
+        return new Calendar(date.nextMonth(months));
     }
-
     public Calendar nextYear() {
-        setYear(++year);
-        return new Calendar(day, month, year);
+        return new Calendar(date.nextYear());
     }
-
     public Calendar nextYear(int years) {
-        Calendar cal = new Calendar(day, month, year);
-        for (int i = 0; i < years; i++) {
-            cal = nextYear();
-        }
-        return cal;
+        return new Calendar(date.nextYear(years));
     }
 
     // previous period
     public Calendar previousDay() {
-        if (day == 1) {
-            this.day = month != 1 ? daysInMonths[month - 1] : daysInMonths[12];
-            return previousMonth();
-        } else {
-            this.day--;
-        }
-        return new Calendar(day, month, year);
+        return new Calendar(date.previousDay());
     }
-
     public Calendar previousDay(int days) {
-        Calendar cal = new Calendar(day, month, year);
-        for (int i = 0; i < days; i++) {
-            cal = previousDay();
-        }
-        return cal;
+        return new Calendar(date.previousDay(days));
     }
-
     public Calendar previousMonth() {
-        if (month == 1) {
-            this.month = 12;
-            return previousYear();
-        } else {
-            this.month--;
-        }
-        return new Calendar(day, month, year);
+        return new Calendar(date.previousMonth());
     }
-
     public Calendar previousMonth(int months) {
-        Calendar cal = new Calendar(day, month, year);
-        for (int i = 0; i < months; i++) {
-            cal = previousMonth();
-        }
-        return cal;
+        return new Calendar(date.previousMonth(months));
     }
-
     public Calendar previousYear() {
-        setYear(--year);
-        return new Calendar(day, month, year);
+        return new Calendar(date.previousYear());
     }
-
     public Calendar previousYear(int years) {
-        Calendar cal = new Calendar(day, month, year);
-        for (int i = 0; i < years; i++) {
-            cal = previousYear();
-        }
-        return cal;
+        return new Calendar(date.previousYear(years));
     }
 
     // display calendar
     public String display() {
-        StringBuilder s = new StringBuilder(Colors.BG_GREEN + Colors.BLACK + "    " + getMonth(month) + "   " + getYear() + "    " + Colors.RESET_COLOR + "\n");
+        StringBuilder s = new StringBuilder(Colors.BG_GREEN + Colors.BLACK + "    " + Date.getMonth(date.getMonth()) + "   " + date.getYear() + "    " + Colors.RESET_COLOR + "\n");
         s.append(Colors.CYAN + "Mo Tu We Th Fr Sa Su" + Colors.RESET_COLOR + "\n");
         int weekCounter = 0;
-        int monthStart = getWeekDay(1, month, year);
-        for (int i = 1; i <= daysInMonths[month] + monthStart - 1; i++) {
+        int monthStart = Date.getWeekDay(1, date.getMonth(), date.getYear());
+        for (int i = 1; i <= date.getDaysInMonths()[date.getMonth()] + monthStart - 1; i++) {
             int day = i - monthStart + 1;
             if ((i + weekCounter) % 8 == 0) {
                 s.append("\n");
@@ -204,7 +99,7 @@ public class Calendar {
                 s.append("   ");
             else if (exactDay(day))
                 s.append(String.format("%s%s", Colors.BG_RED + Colors.BLACK + (String.format("%2d", day)), Colors.RESET_COLOR + " "));
-            else if (day == this.day)
+            else if (day == this.date.getDay())
                 s.append(Colors.BRIGHT_GREEN).append(String.format("%2d ", day)).append(Colors.RESET_COLOR);
             else
                 s.append(String.format("%2d ", day));
@@ -220,6 +115,6 @@ public class Calendar {
 
     // private methods
     private boolean exactDay(int day) {
-        return day == currentDate.getDayOfMonth() && month == currentDate.getMonth().getValue() && year == currentDate.getYear();
+        return day == currentDate.getDayOfMonth() && date.getMonth() == currentDate.getMonth().getValue() && date.getYear() == currentDate.getYear();
     }
 }
