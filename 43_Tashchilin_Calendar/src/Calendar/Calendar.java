@@ -1,7 +1,6 @@
 package Calendar;
 
 import Helpers.Colors;
-
 import java.time.LocalDate;
 
 public class Calendar {
@@ -14,25 +13,40 @@ public class Calendar {
     public Calendar(int day, int month, int year) {
         this.day = day;
         this.month = month;
-        this.year = year;
-        daysInMonths[2] = leapYear(year) ? 29 : 28;
+        setYear(year);
     }
 
     // getters
     public int getDay() {
         return day;
     }
-
     public int getMonth() {
         return month;
     }
-
     public int getYear() {
         return year;
     }
 
-    // public methods
-    public int getWeekDay(int day, int month, int year) {
+    // setters
+    private void setYear(int year) {
+        this.year = year;
+        daysInMonths[2] = leapYear(year) ? 29 : 28;
+    }
+
+    // static methods
+    public static String getWeekDayToString(int day, int month, int year) {
+        return switch (getWeekDay(day, month, year)) {
+            case 1 -> "Monday";
+            case 2 -> "Tuesday";
+            case 3 -> "Wednesday";
+            case 4 -> "Thursday";
+            case 5 -> "Friday";
+            case 6 -> "Saturday";
+            default -> "Sunday";
+        };
+    }
+
+    public static int getWeekDay(int day, int month, int year) {
         if (month < 3) {
             month += 12;
             year -= 1;
@@ -43,16 +57,17 @@ public class Calendar {
         return ((((day + (((month + 1) * 26) / 10) + k + (k / 4) + (j / 4) + (5 * j)) % 7) + 5) % 7) + 1;
     }
 
-    public String getWeekDayToString(int day, int month, int year) {
-        return switch (getWeekDay(day, month, year)) {
-            case 1 -> "Monday";
-            case 2 -> "Tuesday";
-            case 3 -> "Wednesday";
-            case 4 -> "Thursday";
-            case 5 -> "Friday";
-            case 6 -> "Saturday";
-            default -> "Sunday";
-        };
+    public static boolean leapYear(int year) {
+        return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+    }
+
+    // public methods
+    public String getWeekDayToString() {
+        return getWeekDayToString(this.day, this.month, this.year);
+    }
+
+    public int getWeekDay() {
+        return getWeekDay(this.day, this.month, this.year);
     }
 
     public String getMonth(int month) {
@@ -110,7 +125,7 @@ public class Calendar {
     }
 
     public Calendar nextYear() {
-        this.year++;
+        setYear(++year);
         return new Calendar(day, month, year);
     }
 
@@ -160,7 +175,7 @@ public class Calendar {
     }
 
     public Calendar previousYear() {
-        this.year--;
+        setYear(--year);
         return new Calendar(day, month, year);
     }
 
@@ -172,10 +187,7 @@ public class Calendar {
         return cal;
     }
 
-    public static boolean leapYear(int year) {
-        return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
-    }
-
+    // display calendar
     public String display() {
         StringBuilder s = new StringBuilder(Colors.BG_GREEN + Colors.BLACK + "    " + getMonth(month) + "   " + getYear() + "    " + Colors.RESET_COLOR + "\n");
         s.append(Colors.CYAN + "Mo Tu We Th Fr Sa Su" + Colors.RESET_COLOR + "\n");
@@ -197,6 +209,7 @@ public class Calendar {
             else
                 s.append(String.format("%2d ", day));
         }
+        s.append("\n");
         return s.toString();
     }
 
@@ -208,12 +221,5 @@ public class Calendar {
     // private methods
     private boolean exactDay(int day) {
         return day == currentDate.getDayOfMonth() && month == currentDate.getMonth().getValue() && year == currentDate.getYear();
-    }
-
-    //test
-    public static void main(String[] args) {
-        Calendar cal = new Calendar(24, 3, 2021);
-        System.out.println(cal.display());
-        System.out.println(cal.nextDay(16));
     }
 }
