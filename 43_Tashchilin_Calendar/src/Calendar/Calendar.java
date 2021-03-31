@@ -1,9 +1,13 @@
+package Calendar;
+
+import Helpers.Colors;
+
 import java.time.LocalDate;
 
 public class Calendar {
     // data
     private int day, month, year;
-    private final LocalDate currentDate;
+    private final LocalDate currentDate = LocalDate.now();
     private final int[] daysInMonths = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // constructors
@@ -11,7 +15,6 @@ public class Calendar {
         this.day = day;
         this.month = month;
         this.year = year;
-        currentDate = LocalDate.now();
         daysInMonths[2] = leapYear(year) ? 29 : 28;
     }
 
