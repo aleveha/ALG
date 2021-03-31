@@ -4,6 +4,9 @@ public class Date {
     private int day, month, year;
     private final int[] daysInMonths = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
+    private enum WeekDays { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
+    private enum Months { January, February, March, April, May, June, July, August, September, October, November, December }
+
     public Date(int day, int month, int year) {
         this.day = day;
         this.month = month;
@@ -29,32 +32,11 @@ public class Date {
     }
 
     public static String getWeekDayToString(int day, int month, int year) {
-        return switch (getWeekDay(day, month, year)) {
-            case 1 -> "Monday";
-            case 2 -> "Tuesday";
-            case 3 -> "Wednesday";
-            case 4 -> "Thursday";
-            case 5 -> "Friday";
-            case 6 -> "Saturday";
-            default -> "Sunday";
-        };
+        return WeekDays.values()[getWeekDay(day, month, year) - 1].toString();
     }
 
     public static String getMonth(int month) {
-        return switch (month) {
-            case 1 -> "January";
-            case 2 -> "February";
-            case 3 -> "March";
-            case 4 -> "April";
-            case 5 -> "May";
-            case 6 -> "June";
-            case 7 -> "July";
-            case 8 -> "August";
-            case 9 -> "September";
-            case 10 -> "October";
-            case 11 -> "November";
-            default -> "December";
-        };
+        return Months.values()[month - 1].toString();
     }
 
     public static int getWeekDay(int day, int month, int year) {
