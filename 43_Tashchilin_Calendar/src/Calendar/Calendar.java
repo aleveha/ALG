@@ -1,9 +1,7 @@
 package Calendar;
 
 import Helpers.Colors;
-
 import java.time.LocalDate;
-
 import Date.Date;
 
 public class Calendar {

@@ -11,7 +11,7 @@ public class App {
         System.out.println(cal.nextYear(5));
 
         System.out.println(Colors.BG_BLUE + Colors.BLACK + "Not-static methods" + Colors.RESET_COLOR);
-        System.out.printf("%s.%s.%s\n", cal.getDay(), cal.getMonth(), cal.getYear());
+        System.out.printf("%d.%d.%d\n", cal.getDay(), cal.getMonth(), cal.getYear());
         System.out.println("Day number in the week = " + cal.getWeekDay());
         System.out.println("Weekday = " + cal.getWeekDayToString());
 
