@@ -30,7 +30,7 @@ public abstract class Client implements Comparable<Client> {
     }
 
     public void addAccount(Account account) {
-        if (accounts.size() == 5) throw new IndexOutOfBoundsException("More than 5 accounts is not supported");
+        if (accounts.size() == 5) throw new IllegalAccountAmountException("More than 5 accounts is not supported");
 
         if (existsAccount(account.getId()) == null) accounts.add(account);
         else addAmount(account.getId(), account.getAmount());

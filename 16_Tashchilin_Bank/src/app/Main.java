@@ -1,9 +1,6 @@
 package app;
 
-import bank.Account;
-import bank.Client;
-import bank.Company;
-import bank.Person;
+import bank.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
