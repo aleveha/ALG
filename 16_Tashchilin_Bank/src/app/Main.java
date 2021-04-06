@@ -4,6 +4,7 @@ import bank.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 import static Helpers.Colors.*;
@@ -54,7 +55,22 @@ public class Main {
             System.out.println(client.getClientName() + ", " + client.getAllAmount());
         }
 
-        Arrays.sort(clients);
+        ////// sorting by implementing Comparable interface //////
+//         Arrays.sort(clients);
+
+        ////// sorting by using Comparator //////
+//         Arrays.sort(clients, new Comparator<Client>() {
+//             @Override
+//             public int compare(Client c1, Client c2) {
+//                 return c1.getAllAmount().compareTo(c2.getAllAmount());
+//             }
+//         })
+//         Arrays.sort(clients, (c1, c2) -> c1.getAllAmount().compareTo(c2.getAllAmount()));
+//         Arrays.sort(clients, Comparator.comparing(Client::getAllAmount));
+
+        // sorting by using method referencing
+        Arrays.sort(clients, Client::sort);
+
         System.out.println();
         System.out.println(BG_GREEN + BLACK + "After sorting" + RESET_COLOR);
         for (Client client : clients) {

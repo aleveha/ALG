@@ -2,12 +2,13 @@ package bank;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-public abstract class Client implements Comparable<Client> {
+public abstract class Client /*implements Comparable<Client>*/ {
     // data
     private String name;
-    private ArrayList<Account> accounts = new ArrayList<>(5);
+    private List<Account> accounts = new ArrayList<>(5);
 
     // constructors
     public Client(String name, Account account) {
@@ -50,8 +51,14 @@ public abstract class Client implements Comparable<Client> {
 
     public abstract String getClientName();
 
-    @Override
-    public int compareTo(Client o) {
+    ////// sorting by implementing Comparable interface //////
+//    @Override
+//    public int compareTo(Client o) {
+//        return this.getAllAmount().compareTo(o.getAllAmount());
+//    }
+
+    ////// sorting by using method referencing //////
+    public int sort(Client o) {
         return this.getAllAmount().compareTo(o.getAllAmount());
     }
 }
