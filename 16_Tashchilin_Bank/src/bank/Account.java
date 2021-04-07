@@ -4,16 +4,23 @@ import java.math.BigDecimal;
 
 public class Account {
     // data
+    private static int accountsCounter = 0;
     private int id;
     private BigDecimal amount = new BigDecimal(0);
 
     // constructors
     public Account() {
+        this.id = ++accountsCounter;
     }
 
     public Account(BigDecimal amount) {
+        this();
         this.amount = amount;
-        this.id = (int) (Math.random() * 1000);
+    }
+
+    // for coping
+    public Account(Account account){
+        this(account.amount, account.id);
     }
 
     public Account(BigDecimal amount, int id) {
@@ -38,5 +45,13 @@ public class Account {
     // methods
     public void addAmount(BigDecimal amount) {
         setAmount(this.amount.add(amount));
+    }
+
+    public boolean withdraw(BigDecimal amount) {
+        if (!(this.amount.subtract(amount).compareTo(BigDecimal.valueOf(0)) > 0)) {
+            return false;
+        }
+        setAmount(this.amount.subtract(amount));
+        return true;
     }
 }

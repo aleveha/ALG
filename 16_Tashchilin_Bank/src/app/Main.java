@@ -3,55 +3,40 @@ package app;
 import bank.*;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static Helpers.Colors.*;
 
 public class Main {
     public static void main(String[] args) {
         // create new clients
-        Person baker = new Person("Pekar", new Account(BigDecimal.valueOf(100), 556));
+        Person baker = new Person("Pekar", new Account(BigDecimal.valueOf(100)));
         Person teacher = new Person("Svecova");
         Company autoCompany = new Company("Skoda");
-        Company itCompany = new Company("IBM", new Account(BigDecimal.valueOf(35000), 296));
+        Company itCompany = new Company("IBM", new Account(BigDecimal.valueOf(35000)));
 
         // add them to to array
         Client[] clients = new Client[]{baker, teacher, autoCompany, itCompany};
+        List<Client> cli = new ArrayList<>();
+        cli.add(baker);
+        cli.add(teacher);
+        cli.add(autoCompany);
+        cli.add(itCompany);
 
         // add client's accounts
-        baker.addAccount(new Account(BigDecimal.valueOf(2000), 559));
-        try {
-            baker.addAmount(559, BigDecimal.valueOf(3000));
-        } catch (NoSuchElementException ex) {
-            System.out.println(RED + ex.getMessage());
-            System.out.println();
-        }
-        baker.addAccount(new Account(BigDecimal.valueOf(1000), 560));
-        baker.addAccount(new Account(BigDecimal.valueOf(4000), 562));
+        baker.addAccount(new Account(BigDecimal.valueOf(1000)));
+        baker.addAccount(new Account(BigDecimal.valueOf(500)));
 
-        teacher.addAccount(new Account(BigDecimal.valueOf(200), 685));
-        try {
-            teacher.addAmount(559, BigDecimal.valueOf(3000));
-        } catch (NoSuchElementException ex) {
-            System.out.println(RED + ex.getMessage());
-            System.out.println();
-        }
-        teacher.addAccount(new Account(BigDecimal.valueOf(1000), 686));
-        teacher.addAccount(new Account(BigDecimal.valueOf(400), 684));
+        teacher.addAccount(new Account(BigDecimal.valueOf(1200)));
 
-        autoCompany.addAccount(new Account(BigDecimal.valueOf(29000), 203));
-        autoCompany.addAccount(new Account(BigDecimal.valueOf(26000), 204));
-        try {
-            autoCompany.addAmount(204, BigDecimal.valueOf(2000));
-        } catch (NoSuchElementException ex) {
-            System.out.println(RED + ex.getMessage());
-            System.out.println();
-        }
+        autoCompany.addAccount(new Account(BigDecimal.valueOf(120)));
 
         System.out.println(BG_GREEN + BLACK + "Before sorting" + RESET_COLOR);
-        for (Client client : clients) {
+//        for (Client client : clients) {
+//            System.out.println(client.getClientName() + ", " + client.getAllAmount());
+//        }
+
+        for (Client client : cli) {
             System.out.println(client.getClientName() + ", " + client.getAllAmount());
         }
 
@@ -71,9 +56,15 @@ public class Main {
         // sorting by using method referencing
         Arrays.sort(clients, Client::sort);
 
+        Collections.sort(cli);
+
         System.out.println();
         System.out.println(BG_GREEN + BLACK + "After sorting" + RESET_COLOR);
-        for (Client client : clients) {
+//        for (Client client : clients) {
+//            System.out.println(client.getClientName() + ", " + client.getAllAmount());
+//        }
+
+        for (Client client : cli) {
             System.out.println(client.getClientName() + ", " + client.getAllAmount());
         }
     }

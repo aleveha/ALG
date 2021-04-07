@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public abstract class Client /*implements Comparable<Client>*/ {
+public abstract class Client implements Comparable<Client> {
     // data
     private String name;
     private List<Account> accounts = new ArrayList<>(5);
 
     // constructors
-    public Client(String name, Account account) {
+    public Client(String name) {
         this.name = name;
-        this.accounts.add(account);
+    }
+
+    public Client(String name, Account account) {
+        this(name);
+        this.accounts.add(new Account(account));
     }
 
     // getters
@@ -33,7 +37,7 @@ public abstract class Client /*implements Comparable<Client>*/ {
     public void addAccount(Account account) {
         if (accounts.size() == 5) throw new IllegalAccountAmountException("More than 5 accounts is not supported");
 
-        if (existsAccount(account.getId()) == null) accounts.add(account);
+        if (existsAccount(account.getId()) == null) accounts.add(new Account(account));
         else addAmount(account.getId(), account.getAmount());
     }
 
@@ -52,10 +56,10 @@ public abstract class Client /*implements Comparable<Client>*/ {
     public abstract String getClientName();
 
     ////// sorting by implementing Comparable interface //////
-//    @Override
-//    public int compareTo(Client o) {
-//        return this.getAllAmount().compareTo(o.getAllAmount());
-//    }
+    @Override
+    public int compareTo(Client o) {
+        return this.getAllAmount().compareTo(o.getAllAmount());
+    }
 
     ////// sorting by using method referencing //////
     public int sort(Client o) {
