@@ -67,5 +67,9 @@ public class Main {
         for (Client client : cli) {
             System.out.println(client.getClientName() + ", " + client.getAllAmount());
         }
+
+        System.out.println();
+        System.out.println(BG_GREEN + BLACK + "Using streams" + RESET_COLOR);
+        cli.forEach(client -> System.out.println(client.getClientName() + ", " + client.getAllAmount()));
     }
 }
