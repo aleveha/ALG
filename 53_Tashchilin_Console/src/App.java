@@ -16,6 +16,6 @@ public class App {
         System.out.println();
         System.out.println();
         System.out.println();
-        System.out.println(console.dir("../"));
+        System.out.println(console.dir("/Drivers/AMD"));
     }
 }
