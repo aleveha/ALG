@@ -9,7 +9,7 @@ public class Dir implements Helpable {
 
         File file = new File(addr);
         String[] pathNames = file.list();
-        Arrays.stream(pathNames).sorted().forEach(path -> s.append(path).append("\n"));
+        if (pathNames != null)  Arrays.stream(pathNames).sorted().forEach(path -> s.append(path).append("\n"));
 
         return s.toString();
     }
@@ -17,8 +17,7 @@ public class Dir implements Helpable {
     @Override
     public String help() {
         return "dir – vrátí víceřádkový textový řetězec s formátovaným výpisem aktuálního adresáře.\n" +
-                "dir <adress> – vrátí víceřádkový textový řetězec s formátovaným výpisem adresáře" + " " +
-        "předaného v parametru, nemění aktuální adresář";
+                "dir <adress> – vrátí víceřádkový textový řetězec s formátovaným výpisem adresáře předaného v parametru, nemění aktuální adresář";
 
     }
 }
