@@ -21,8 +21,13 @@ public class Console {
 
         String[] helpActions = new String[]{
                 new Dir().help(),
-                new Cd().help()
+                new Cd().help(),
+                new MkFile().help(),
+                new MkDir().help(),
+                new MkDirs().help(),
+                new Rename().help()
         };
+
 
         Arrays.stream(helpActions).forEach(method -> s.append(method).append("\n\n"));
 
