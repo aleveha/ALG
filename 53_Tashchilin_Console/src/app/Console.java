@@ -2,6 +2,7 @@ package app;
 
 import methods.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -28,7 +29,6 @@ public class Console {
                 new Rename().help()
         };
 
-
         Arrays.stream(helpActions).forEach(method -> s.append(method).append("\n\n"));
 
         return s.toString();
@@ -43,15 +43,11 @@ public class Console {
     }
 
     public Console cd(String addr) {
-        return new Cd().act(addr);
+        return new Cd().act(this.addr + File.separator + addr);
     }
 
-    public String mkfile(String addr) {
-        try {
-            return new MkFile().act(addr);
-        } catch (IOException ex) {
-            return "An error occurred during creating new file.";
-        }
+    public boolean mkfile(String addr) throws IOException {
+        return new MkFile().act(this.addr + File.separator + addr);
     }
 
     public String mkdir(String addr) {
@@ -62,8 +58,7 @@ public class Console {
         return new MkDirs().act(addr);
     }
 
-    public String rename(String args) {
-        String[] files = args.split(" ", 2);
-        return new Rename().act(files[0], files[1]);
+    public boolean rename(String[] files) throws IOException {
+        return new Rename().act(this.addr + File.separator + files[0], this.addr + File.separator + files[1]);
     }
 }

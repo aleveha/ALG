@@ -4,7 +4,7 @@ import app.Console;
 
 import java.io.File;
 
-public class Cd implements Helpable{
+public class Cd implements Helpable {
     public Console act(String addr) {
         return new Console(new File(addr).getAbsolutePath());
     }

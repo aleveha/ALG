@@ -1,24 +1,24 @@
 package methods;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Rename implements Helpable {
-    public String act(String file1, String file2) {
-        String answer;
+    public boolean act(String file1, String file2) throws IOException {
         File oldFile = new File(file1);
         File newFile = new File(file2);
 
+        System.out.println(oldFile);
+        System.out.println(newFile);
+
         if (!oldFile.exists()) {
-            return "File does not exist";
+            throw new IOException("File does not exist");
         }
         if (newFile.exists()) {
-            return "File already exists";
+            throw new IOException("File already exists");
         }
 
-        boolean success = oldFile.renameTo(newFile);
-        answer = success ? "File successfully renamed." : "Something went wrong.";
-
-        return answer;
+        return oldFile.renameTo(newFile);
     }
 
     @Override

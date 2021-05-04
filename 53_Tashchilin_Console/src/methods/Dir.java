@@ -5,11 +5,10 @@ import java.util.Arrays;
 
 public class Dir implements Helpable {
     public String act(String addr) {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
 
-        File file = new File(addr);
-        String[] pathNames = file.list();
-        if (pathNames != null)  Arrays.stream(pathNames).sorted().forEach(path -> s.append(path).append("\n"));
+        String[] pathNames = new File(addr).list();
+        if (pathNames != null) Arrays.stream(pathNames).sorted().forEach(path -> s.append(path).append("\n"));
 
         return s.toString();
     }

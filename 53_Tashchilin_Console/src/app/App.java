@@ -1,6 +1,7 @@
 package app;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class App {
@@ -11,7 +12,7 @@ public class App {
         Console console;
         String userAnswer;
 
-        current = new File(".").getAbsolutePath();
+        current = new File("").getAbsolutePath();
         console = new Console(current);
 
         do {
@@ -23,32 +24,51 @@ public class App {
             if (parts.length > 1) {
                 argument = parts[1].trim();
             }
-            boolean emptyArgument = argument.equals(console.getAddr());
-            String answer = "";
+            boolean emptyArgument = argument.trim().equals(console.getAddr());
+            String answer;
 
             switch (command) {
                 case "dir":
-                    argument = console.getAddr() + File.separator + argument;
                     answer = emptyArgument ? console.dir() : console.dir(argument);
                     break;
                 case "cd":
-                    argument = console.getAddr() + File.separator + argument;
+                    if (emptyArgument) argument = "";
+
                     console = console.cd(argument);
+                    answer = console.getAddr() + "\n";
                     break;
                 case "mkfile":
-                    argument = console.getAddr() + File.separator + argument;
-                    answer = emptyArgument ? "Empty argument!" : console.mkfile(argument);
+                    if (emptyArgument) {
+                        answer = "Empty argument!\n";
+                        break;
+                    }
+
+                    try {
+                        answer = console.mkfile(argument) ? "File successfully created.\n" : "File already exists.\n";
+                    } catch (IOException ex) {
+                        answer = ex.getMessage();
+                    }
                     break;
                 case "mkdir":
                     argument = console.getAddr() + File.separator + argument;
-                    answer = emptyArgument ? "Empty argument!" : console.mkdir(argument);
+                    answer = emptyArgument ? "Empty argument!\n" : console.mkdir(argument);
                     break;
                 case "mkdirs":
                     argument = console.getAddr() + File.separator + argument;
-                    answer = emptyArgument ? "Empty argument!" : console.mkdirs(argument);
+                    answer = emptyArgument ? "Empty argument!\n" : console.mkdirs(argument);
                     break;
                 case "rename":
-                    answer = emptyArgument ? "Empty argument!" : console.rename(argument);
+                    if (emptyArgument) {
+                        answer = "Empty argument!\n";
+                        break;
+                    }
+
+                    String[] files = argument.split(" ", 2);
+                    try {
+                        answer = console.rename(files) ? "File successfully renamed.\n" : "Something went wrong.\n";
+                    } catch (IOException ex) {
+                        answer = ex.getMessage();
+                    }
                     break;
                 default:
                     answer = console.help();
