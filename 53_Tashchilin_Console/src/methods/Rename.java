@@ -8,9 +8,6 @@ public class Rename implements Helpable {
         File oldFile = new File(file1);
         File newFile = new File(file2);
 
-        System.out.println(oldFile);
-        System.out.println(newFile);
-
         if (!oldFile.exists()) {
             throw new IOException("File does not exist");
         }

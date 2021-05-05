@@ -54,8 +54,8 @@ public class App {
                         answer = "Empty argument!\n";
                         break;
                     }
-                    argument = console.getAddr() + File.separator + argument;
-                    answer = console.mkdir(argument) ? "Created !\n" : "Cannot be crated ! \n" ;
+
+                    answer = console.mkdir(argument) ? "Directory successfully created.\n" : "Directory cannot be crated.\n" ;
                     break;
                 case "mkdirs":
                     if (emptyArgument) {
@@ -63,10 +63,7 @@ public class App {
                         break;
                     }
 
-                    argument = console.getAddr() + File.separator + argument;
-
-
-                    answer = console.mkdirs(argument) ? "Created !\n" : "Cannot be created\n";
+                    answer = console.mkdirs(argument) ? "Directories successfully created.\n" : "Directories cannot be created\n";
                     break;
                 case "rename":
                     if (emptyArgument) {

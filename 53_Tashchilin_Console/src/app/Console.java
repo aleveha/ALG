@@ -51,11 +51,11 @@ public class Console {
     }
 
     public boolean mkdir(String addr) {
-        return new MkDir().act(addr);
+        return new MkDir().act(this.addr + File.separator + addr);
     }
 
     public boolean mkdirs(String addr) {
-        return new MkDirs().act(addr);
+        return new MkDirs().act(this.addr + File.separator + addr);
     }
 
     public boolean rename(String[] files) throws IOException {
