@@ -50,11 +50,11 @@ public class Console {
         return new MkFile().act(this.addr + File.separator + addr);
     }
 
-    public String mkdir(String addr) {
+    public boolean mkdir(String addr) {
         return new MkDir().act(addr);
     }
 
-    public String mkdirs(String addr) {
+    public boolean mkdirs(String addr) {
         return new MkDirs().act(addr);
     }
 

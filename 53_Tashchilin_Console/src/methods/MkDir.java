@@ -4,13 +4,9 @@ import java.io.File;
 
 public class MkDir implements Helpable {
 
-    public String act(String addr) {
+    public boolean act(String addr) {
         File myObj = new File(addr);
-        if (myObj.mkdir()) {
-            return "Dir created: " + myObj.getName();
-        } else {
-          return "Dir already exists.";
-        }
+        return myObj.mkdir();
     }
 
     @Override
