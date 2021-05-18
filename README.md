@@ -1,2 +1,2 @@
 # ALG2
-**Code from lessons and homeworks**
+**Codes from lessons and homeworks**
