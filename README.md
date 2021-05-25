@@ -1,2 +1,2 @@
-# ALG
-**Code from lessons in university**
+# ALG2
+**Codes from lessons and homeworks**
