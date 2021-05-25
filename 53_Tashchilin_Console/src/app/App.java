@@ -2,6 +2,7 @@ package app;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
@@ -29,7 +30,17 @@ public class App {
 
             switch (command) {
                 case "dir":
-                    answer = emptyArgument ? console.dir() : console.dir(argument);
+                    if (emptyArgument) {
+                        answer = console.dir();
+                        break;
+                    }
+
+                    String[] arguments = argument.split(" ", 2);
+                    try {
+                        answer = arguments.length == 1 && !arguments[0].contains("-") ? console.dir(argument) : console.dir(arguments);
+                    } catch (IllegalArgumentException ex) {
+                        answer = ex.getMessage();
+                    }
                     break;
                 case "cd":
                     if (emptyArgument) argument = "";
@@ -55,7 +66,7 @@ public class App {
                         break;
                     }
 
-                    answer = console.mkdir(argument) ? "Directory successfully created.\n" : "Directory cannot be crated.\n" ;
+                    answer = console.mkdir(argument) ? "Directory successfully created.\n" : "Directory cannot be crated.\n";
                     break;
                 case "mkdirs":
                     if (emptyArgument) {

@@ -42,6 +42,15 @@ public class Console {
         return new Dir().act(addr);
     }
 
+    public String dir(String[] args) {
+        String parameter = args[0];
+        if (!parameter.equalsIgnoreCase("-r")) {
+            throw new IllegalArgumentException(String.format("Unknown parameter '%s'! Try 'dir -r [addr]'.", parameter));
+        }
+
+        return new Dir().actRecurse(args.length > 1 ? args[1] : ".");
+    }
+
     public Console cd(String addr) {
         return new Cd().act(this.addr + File.separator + addr);
     }
